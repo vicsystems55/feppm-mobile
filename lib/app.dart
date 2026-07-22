@@ -43,6 +43,8 @@ class _FeppmAppState extends State<FeppmApp> {
         home: _authController.isAuthenticated
             ? DashboardScreen(
                 userName: _authController.user?.displayName,
+                userEmail: _authController.user?.email,
+                accessToken: _authController.accessToken ?? '',
                 onLogout: _authController.logout,
               )
             : LoginScreen(authController: _authController),

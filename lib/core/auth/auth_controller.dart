@@ -19,6 +19,7 @@ class AuthController extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
   AuthUser? get user => _session?.user;
+  String? get accessToken => _session?.accessToken;
 
   void restoreSession() {
     _session = _storage.read();
