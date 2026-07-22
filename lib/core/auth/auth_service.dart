@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import '../config/app_config.dart';
 import 'auth_session.dart';
 
 class AuthException implements Exception {
@@ -15,11 +16,6 @@ class AuthException implements Exception {
 class AuthService {
   AuthService({http.Client? client}) : _client = client ?? http.Client();
 
-  static const baseUrl = String.fromEnvironment(
-    'API_BASE_URL',
-    defaultValue: 'http://10.0.2.2:5000/api/v1',
-  );
-
   final http.Client _client;
 
   Future<AuthSession> login({
@@ -30,7 +26,7 @@ class AuthService {
     try {
       final response = await _client
           .post(
-            Uri.parse('$baseUrl/auth/login'),
+            Uri.parse('${AppConfig.apiBaseUrl}/auth/login'),
             headers: const {'Content-Type': 'application/json'},
             body: jsonEncode({
               'email': email.trim().toLowerCase(),
@@ -66,7 +62,7 @@ class AuthService {
     try {
       await _client
           .post(
-            Uri.parse('$baseUrl/auth/logout'),
+            Uri.parse('${AppConfig.apiBaseUrl}/auth/logout'),
             headers: {
               if (session?.accessToken != null)
                 'Authorization': 'Bearer ${session!.accessToken}',
